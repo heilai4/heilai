@@ -1,122 +1,67 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>我的个人博客</title>
+  <meta charset="UTF-8">
+  <title>漫画阅读器</title>
   <style>
     body {
-      font-family: "Helvetica Neue", sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f4f4f4;
-      color: #333;
-    }
-
-    header {
-      background: #4a90e2;
-      color: white;
-      padding: 2rem 1rem;
+      background: #000;
+      color: #fff;
       text-align: center;
+      font-family: sans-serif;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+    #comic {
+      max-width: 100%;
+      max-height: 100vh;
     }
-
-    header p {
-      margin: 0.5rem 0 0;
-      font-size: 1.1rem;
+    .nav {
+      position: fixed;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
     }
-
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    section {
-      margin-bottom: 2rem;
-    }
-
-    .post {
-      background: white;
+    .btn {
+      background: rgba(0, 0, 0, 0.5);
       padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    .post h2 {
-      margin-top: 0;
-      font-size: 1.5rem;
-    }
-
-    .post .date {
-      color: #888;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: #eee;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
-
-      .post h2 {
-        font-size: 1.25rem;
-      }
+      font-size: 2rem;
+      cursor: pointer;
+      pointer-events: auto;
+      user-select: none;
     }
   </style>
 </head>
 <body>
+  <img id="comic" src="1.jpg" alt="漫画页面">
+  <div class="nav">
+    <div class="btn" onclick="prevPage()">⬅</div>
+    <div class="btn" onclick="nextPage()">➡</div>
+  </div>
 
-  <header>
-    <h1>我的博客</h1>
-    <p>记录生活 · 分享知识 · 留下思考</p>
-  </header>
+  <script>
+    const totalPages = 10; // 改成你漫画页数
+    let currentPage = 1;
 
-  <main>
-    <section id="about">
-      <h2>关于我</h2>
-      <p>你好，我是张三，一个热爱编程和写作的人。这是我的个人博客，我会在这里分享我的学习笔记、项目经验和生活感悟。</p>
-    </section>
+    function showPage() {
+      document.getElementById('comic').src = currentPage + '.jpg';
+    }
 
-    <section id="blog">
-      <h2>博客文章</h2>
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        showPage();
+      }
+    }
 
-      <div class="post">
-        <h2>如何用 HTML 写一个博客</h2>
-        <div class="date">2025年6月3日</div>
-        <p>本篇文章将带你从零开始，了解如何用 HTML 编写一个简单的静态博客页面。</p>
-      </div>
-
-      <div class="post">
-        <h2>我学 Flask 的经历</h2>
-        <div class="date">2025年5月20日</div>
-        <p>最近我开始学习 Flask，这是一款轻量级的 Python Web 框架，本文是我的学习记录和心得。</p>
-      </div>
-
-      <div class="post">
-        <h2>写博客的意义</h2>
-        <div class="date">2025年4月15日</div>
-        <p>写博客不止是技术输出，更是一种自我表达和成长的方式。</p>
-      </div>
-
-    </section>
-  </main>
-
-  <footer>
-    © 2025 张三的博客 | 联系邮箱: zhangsan@example.com
-  </footer>
-
+    function nextPage() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage();
+      }
+    }
+  </script>
 </body>
 </html>
