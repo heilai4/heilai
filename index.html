@@ -62,17 +62,20 @@
   <script>
     const totalPages = 52; // 改成你漫画页数
     let currentPage = 1;
-
     function showPage() {
-      document.getElementById('comic').src = './images/' + currentPage + '.jpg';
-       // 更新右下角页码
+      const img = document.getElementById('comic');
+      img.src = './images/' + currentPage + '.jpg';
+      
+      // 更新右下角页码
       document.getElementById('pageIndicator').textContent =
-      '第 ' + currentPage + ' 页 / 共 ' + totalPages + ' 页';
+        '第 ' + currentPage + ' 页 / 共 ' + totalPages + ' 页';
 
       img.onerror = function () {
-      alert('第 ' + currentPage + ' 页的图片不存在！');
-  };
+        alert('第 ' + currentPage + ' 页的图片不存在！');
+      };
     }
+
+    
 
     function prevPage() {
       if (currentPage > 1) {
