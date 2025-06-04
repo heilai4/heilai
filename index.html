@@ -37,9 +37,22 @@
       pointer-events: auto;
       user-select: none;
     }
+    #pageIndicator {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    z-index: 10;
+    }
+
   </style>
 </head>
 <body>
+  >
   <img id="comic" src="1.jpg" alt="漫画页面">
   <div class="nav">
     <div class="btn" onclick="prevPage()">⬅</div>
@@ -52,6 +65,13 @@
 
     function showPage() {
       document.getElementById('comic').src = currentPage + '.jpg';
+       // 更新右下角页码
+      document.getElementById('pageIndicator').textContent =
+      '第 ' + currentPage + ' 页 / 共 ' + totalPages + ' 页';
+
+      img.onerror = function () {
+      alert('第 ' + currentPage + ' 页的图片不存在！');
+  };
     }
 
     function prevPage() {
@@ -68,5 +88,7 @@
       }
     }
   </script>
+  <div id="pageIndicator">第 1 页 / 共 52 页</div>
+
 </body>
 </html>
