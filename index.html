@@ -53,7 +53,7 @@
 </head>
 <body>
   >
-  <img id="comic" src="1.jpg" alt="漫画页面">
+  <img id="comic" src="./images/1.jpg" alt="漫画页面">
   <div class="nav">
     <div class="btn" onclick="prevPage()">⬅</div>
     <div class="btn" onclick="nextPage()">➡</div>
@@ -64,7 +64,7 @@
     let currentPage = 1;
 
     function showPage() {
-      document.getElementById('comic').src = currentPage + '.jpg';
+      document.getElementById('comic').src = './images/' + currentPage + '.jpg';
        // 更新右下角页码
       document.getElementById('pageIndicator').textContent =
       '第 ' + currentPage + ' 页 / 共 ' + totalPages + ' 页';
