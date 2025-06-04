@@ -59,38 +59,46 @@
     <div class="btn" onclick="nextPage()">➡</div>
   </div>
 
-  <script>
-    const totalPages = 52; // 改成你漫画页数
-    let currentPage = 1;
-    function showPage() {
-      const img = document.getElementById('comic');
-      img.src = './images/' + currentPage + '.jpg';
-      
-      // 更新右下角页码
-      document.getElementById('pageIndicator').textContent =
-        '第 ' + currentPage + ' 页 / 共 ' + totalPages + ' 页';
 
-      img.onerror = function () {
-        alert('第 ' + currentPage + ' 页的图片不存在！');
-      };
+<script>
+  let currentPage = 1;
+  const totalPages = 52;
+
+  function showPage() {
+    const img = document.getElementById('comic');
+    img.src = './images/' + currentPage + '.jpg';
+    document.getElementById('pageIndicator').textContent =
+      '第 ' + currentPage + ' 页 / 共 ' + totalPages + ' 页';
+
+    // 预加载下一页图片
+    if (currentPage < totalPages) {
+      const nextImg = new Image();
+      nextImg.src = './images/' + (currentPage + 1) + '.jpg';
     }
 
-    
+    img.onerror = function () {
+      alert('第 ' + currentPage + ' 页的图片不存在！');
+    };
+  }
 
-    function prevPage() {
-      if (currentPage > 1) {
-        currentPage--;
-        showPage();
-      }
+  function prevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      showPage();
     }
+  }
 
-    function nextPage() {
-      if (currentPage < totalPages) {
-        currentPage++;
-        showPage();
-      }
+  function nextPage() {
+    if (currentPage < totalPages) {
+      currentPage++;
+      showPage();
     }
-  </script>
+  }
+
+  // 初始化页面
+  window.onload = showPage;
+</script>
+
   <div id="pageIndicator">第 1 页 / 共 52 页</div>
 
 </body>
