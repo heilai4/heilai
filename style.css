@@ -1,0 +1,22 @@
+body { 
+    background: #111; 
+    color: #fff; 
+    font-family: sans-serif; 
+    text-align: center; 
+}
+.grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; 
+    padding: 20px; }
+.item { width: 200px; 
+    background: #222; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    text-decoration: none; 
+    color: #fff; }
+.item img { width: 100%; 
+    display: block; }
+.item-title { padding: 10px; 
+    font-size: 16px; }

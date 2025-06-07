@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>漫画阅读器</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+    }
+    #comicImg {
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      background: black;
+    }
+    .nav {
+      position: fixed;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .btn {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1rem;
+      font-size: 2rem;
+      cursor: pointer;
+      pointer-events: auto;
+      user-select: none;
+      color: white;
+    }
+    #pageIndicator {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      color: white;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="comicImg" src="" alt="漫画页面">
+  <div class="nav">
+    <div class="btn" id="prevBtn">⬅</div>
+    <div class="btn" id="nextBtn">➡</div>
+  </div>
+  <div id="pageIndicator">第 1 页 / 共 N 页</div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const comicId = params.get('comic');
+    const chapterId = params.get('chapter');
+
+    let currentPage = 0;
+    let totalPages = 0;
+    let chapter = null;
+
+    fetch(`data/${comicId}.json`)
+      .then(res => res.json())
+      .then(data => {
+        chapter = data.chapters.find(ch => ch.id === chapterId);
+        if (!chapter) return alert('找不到该章节');
+
+        totalPages = chapter.pages.length;
+        showPage();
+      });
+
+    function showPage() {
+      const img = document.getElementById('comicImg');
+      const pageName = chapter.pages[currentPage];
+      img.src = `${chapter.path}/${pageName}`;
+      document.getElementById('pageIndicator').textContent =
+        `第 ${currentPage + 1} 页 / 共 ${totalPages} 页`;
+    }
+
+    document.getElementById('prevBtn').onclick = () => {
+      if (currentPage > 0) {
+        currentPage--;
+        showPage();
+      }
+    };
+
+    document.getElementById('nextBtn').onclick = () => {
+      if (currentPage < totalPages - 1) {
+        currentPage++;
+        showPage();
+      }
+    };
+  </script>
+
+</body>
+</html>

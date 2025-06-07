@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>章节列表</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    #chapterList {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+      list-style: none;
+    }
+    #chapterList li {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 200px;
+      text-align: center;
+    }
+    #chapterList li:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    #chapterList a {
+      display: block;
+      padding: 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="comicTitle">加载中...</h1>
+  <ul id="chapterList"></ul>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const comicId = urlParams.get('id');
+    fetch(`data/${comicId}.json`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('comicTitle').textContent = data.title;
+        const ul = document.getElementById('chapterList');
+        data.chapters.forEach(ch => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="reader.html?comic=${comicId}&chapter=${ch.id}">${ch.title}</a>`;
+          ul.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>

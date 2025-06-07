@@ -2,104 +2,31 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>漫画阅读器</title>
+  <title>漫画首页</title>
   <style>
-    body {
-      margin: 0;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      font-family: sans-serif;
-    }
-    #comic {
-      width: 100vw;
-      height: 100vh;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-      background: #000;
-    }
-
-    .nav {
-      position: fixed;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-    .btn {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 1rem;
-      font-size: 2rem;
-      cursor: pointer;
-      pointer-events: auto;
-      user-select: none;
-    }
-    #pageIndicator {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 6px 10px;
-    border-radius: 10px;
-    font-size: 16px;
-    z-index: 10;
-    }
-
+    @import url(style.css);
   </style>
 </head>
 <body>
-  >
-  <img id="comic" src="./images/1.jpg" alt="漫画页面">
-  <div class="nav">
-    <div class="btn" onclick="prevPage()">⬅</div>
-    <div class="btn" onclick="nextPage()">➡</div>
-  </div>
+  <h1>漫画目录</h1>
+  <div class="grid" id="comicList"></div>
 
-
-<script>
-  let currentPage = 1;
-  const totalPages = 52;
-
-  function showPage() {
-    const img = document.getElementById('comic');
-    img.src = './images/' + currentPage + '.jpg';
-    document.getElementById('pageIndicator').textContent =
-      '第 ' + currentPage + ' 页 / 共 ' + totalPages + ' 页';
-
-    // 预加载下一页图片
-    if (currentPage < totalPages) {
-      const nextImg = new Image();
-      nextImg.src = './images/' + (currentPage + 1) + '.jpg';
-    }
-
-    img.onerror = function () {
-      alert('第 ' + currentPage + ' 页的图片不存在！');
-    };
-  }
-
-  function prevPage() {
-    if (currentPage > 1) {
-      currentPage--;
-      showPage();
-    }
-  }
-
-  function nextPage() {
-    if (currentPage < totalPages) {
-      currentPage++;
-      showPage();
-    }
-  }
-
-  // 初始化页面
-  window.onload = showPage;
-</script>
-
-  <div id="pageIndicator">第 1 页 / 共 52 页</div>
-
+  <script>
+    fetch('data/comics.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('comicList');
+        data.forEach(comic => {
+          const el = document.createElement('a');
+          el.className = 'item';
+          el.href = `comic.html?id=${comic.id}`;
+          el.innerHTML = `
+            <img src="${comic.cover}">
+            <div class="item-title">${comic.title}</div>
+          `;
+          container.appendChild(el);
+        });
+      });
+  </script>
 </body>
 </html>
