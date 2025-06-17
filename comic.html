@@ -41,6 +41,24 @@
       color: #333;
       font-weight: bold;
     }
+    @media (max-width: 768px) {
+      #chapterList {
+        flex-direction: column;
+        gap: 15px;
+      }
+      #chapterList li {
+        width: 100%;
+        min-height: 60px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+      #chapterList a {
+        padding: 25px 15px;
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+    }
   </style>
 </head>
 <body>
